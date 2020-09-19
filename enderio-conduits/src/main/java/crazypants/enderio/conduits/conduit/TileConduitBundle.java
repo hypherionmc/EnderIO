@@ -56,6 +56,7 @@ import crazypants.enderio.conduits.config.ConduitConfig;
 import crazypants.enderio.conduits.render.BlockStateWrapperConduitBundle;
 import crazypants.enderio.conduits.render.BlockStateWrapperConduitBundle.ConduitCacheKey;
 import crazypants.enderio.conduits.render.ConduitRenderMapper;
+import crazypants.enderio.util.FuncUtil;
 import info.loenwind.autosave.annotations.Storable;
 import info.loenwind.autosave.annotations.Store;
 import net.minecraft.block.Block;
@@ -89,15 +90,15 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle, 
    * v this one is the one we work with
    */
 
-  private final List<IServerConduit> serverConduits = new CopyOnWriteArrayList<>();
+  private final @Nonnull List<IServerConduit> serverConduits = new CopyOnWriteArrayList<>();
   private List<IClientConduit> clientConduits;
 
   @Store
   private @Nonnull EnumFacadeType facadeType = EnumFacadeType.BASIC;
 
-  private final List<CollidableComponent> cachedCollidables = new CopyOnWriteArrayList<CollidableComponent>(); // <- duct-tape fix
+  private final @Nonnull List<CollidableComponent> cachedCollidables = new CopyOnWriteArrayList<CollidableComponent>(); // <- duct-tape fix
 
-  private final List<CollidableComponent> cachedConnectors = new CopyOnWriteArrayList<CollidableComponent>(); // <- duct-tape fix
+  private final @Nonnull List<CollidableComponent> cachedConnectors = new CopyOnWriteArrayList<CollidableComponent>(); // <- duct-tape fix
 
   private boolean conduitsDirty = true;
   private boolean collidablesDirty = true;
@@ -110,7 +111,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle, 
   @SideOnly(Side.CLIENT)
   private @Nullable FacadeRenderState facadeRenderAs;
 
-  private ConduitDisplayMode lastMode = ConduitDisplayMode.ALL;
+  private @Nonnull ConduitDisplayMode lastMode = ConduitDisplayMode.ALL;
 
   public TileConduitBundle() {
     this.blockType = ConduitRegistry.getConduitModObjectNN().getBlockNN();
@@ -143,12 +144,8 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle, 
   }
 
   @Override
-  public int getInternalRedstoneSignalForColor(@Nonnull DyeColor col) {
-    IRedstoneConduit redCon = getConduit(IRedstoneConduit.class);
-    if (redCon != null) {
-      return redCon.getRedstoneSignalForColor(col);
-    }
-    return 0;
+  public int getInternalRedstoneSignalForColor(@Nonnull DyeColor col, @Nonnull EnumFacing dir) {
+    return FuncUtil.runIf(getConduit(IRedstoneConduit.class), con -> con.isProvidingWeakPower(dir.getOpposite()), 0);
   }
 
   @Override
@@ -217,7 +214,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle, 
 
   @Override
   protected void onBeforeNbtWrite() {
-    conduits = serverConduits != null ? new CopyOnWriteArrayList<>(serverConduits) : new CopyOnWriteArrayList<>();
+    conduits = new CopyOnWriteArrayList<>(serverConduits);
   }
 
   @Override
@@ -506,7 +503,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle, 
 
   @Override
   public Collection<IServerConduit> getServerConduits() {
-    return serverConduits != null ? serverConduits : Collections.emptyList();
+    return serverConduits;
   }
 
   @Override
@@ -523,7 +520,7 @@ public class TileConduitBundle extends TileEntityEio implements IConduitBundle, 
   // Geometry
 
   @Override
-  public @Nonnull Offset getOffset(@Nonnull Class<? extends IConduit> type, @Nullable EnumFacing dir) {
+  public @Nonnull Offset getOffset(@Nonnull Class<? extends IConduit> type, @SuppressWarnings("null") @Nullable EnumFacing dir) {
     if (getConnectionCount(dir) < 2) {
       return Offset.NONE;
     }

@@ -1,6 +1,7 @@
 package crazypants.enderio.base.config.recipes.xml;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.xml.stream.XMLStreamException;
@@ -9,7 +10,6 @@ import javax.xml.stream.events.StartElement;
 import com.enderio.core.common.util.EntityUtil;
 import com.enderio.core.common.util.NNList;
 import com.enderio.core.common.util.NNList.Callback;
-import com.enderio.core.common.util.NNList.NNIterator;
 
 import crazypants.enderio.base.config.recipes.InvalidRecipeConfigException;
 import crazypants.enderio.base.config.recipes.StaxFactory;
@@ -18,8 +18,13 @@ import crazypants.enderio.base.filter.IFilter;
 import crazypants.enderio.base.filter.item.SoulFilter;
 import crazypants.enderio.base.recipe.MachineRecipeRegistry;
 import crazypants.enderio.base.recipe.soul.BasicSoulBinderRecipe;
+import crazypants.enderio.base.recipe.soul.DynamicSoulBinderRecipe;
 import crazypants.enderio.base.recipe.spawner.EntityDataRegistry;
 import crazypants.enderio.util.CapturedMob;
+import crazypants.enderio.util.FuncUtil;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -51,7 +56,9 @@ public class Soulbinding extends AbstractCrafting {
   private enum SoulHandling {
     ALL,
     LISTED,
-    SPAWNABLE;
+    SPAWNABLE,
+    MONSTERS,
+    ANIMALS;
   }
 
   private int energy, levels;
@@ -109,18 +116,21 @@ public class Soulbinding extends AbstractCrafting {
     if (isValid() && isActive()) {
 
       NNList<ResourceLocation> soulnames = new NNList<>();
+      Predicate<ResourceLocation> entityFilter = null;
 
       switch (soulHandling) {
       case ALL:
         soulnames.addAll(EntityUtil.getAllRegisteredMobNames());
         break;
       case SPAWNABLE:
-        soulnames.addAll(EntityUtil.getAllRegisteredMobNames());
-        for (NNIterator<ResourceLocation> iterator = soulnames.iterator(); iterator.hasNext();) {
-          if (EntityDataRegistry.getInstance().isBlackListedForSpawning(iterator.next())) {
-            iterator.remove();
-          }
-        }
+        entityFilter = name -> name != null && !EntityDataRegistry.getInstance().isBlackListedForSpawning(name);
+        break;
+      case MONSTERS:
+        entityFilter = name -> FuncUtil.runIf(FuncUtil.runIf(name, n -> EntityList.getClass(n)), eclass -> IMob.class.isAssignableFrom(eclass), false);
+        break;
+      case ANIMALS:
+        entityFilter = name -> FuncUtil.runIf(FuncUtil.runIf(name, n -> EntityList.getClass(n)),
+            eclass -> IAnimals.class.isAssignableFrom(eclass) && !IMob.class.isAssignableFrom(eclass), false);
         break;
       default:
       case LISTED:
@@ -132,13 +142,20 @@ public class Soulbinding extends AbstractCrafting {
         break;
       }
 
+      final Predicate<ResourceLocation> entityFilter2 = entityFilter;
+
       input.get().getThing().getItemStacks().apply(new Callback<ItemStack>() {
         int i = 0;
 
         @Override
         public void apply(@Nonnull ItemStack anInput) {
-          MachineRecipeRegistry.instance.registerRecipe(MachineRecipeRegistry.SOULBINDER, //
-              new BasicSoulBinderRecipe(anInput, getOutput().getItemStack(), energy, levels, recipeName + i++, soulnames, logic));
+          if (entityFilter2 != null) {
+            MachineRecipeRegistry.instance.registerRecipe(MachineRecipeRegistry.SOULBINDER, //
+                new DynamicSoulBinderRecipe(anInput, getOutput().getItemStack(), energy, levels, recipeName + i++, entityFilter2, logic));
+          } else {
+            MachineRecipeRegistry.instance.registerRecipe(MachineRecipeRegistry.SOULBINDER, //
+                new BasicSoulBinderRecipe(anInput, getOutput().getItemStack(), energy, levels, recipeName + i++, soulnames, logic));
+          }
         }
       });
     }

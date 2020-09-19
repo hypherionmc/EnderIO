@@ -301,7 +301,7 @@ public class ItemConduit extends AbstractConduit implements IItemConduit, IFilte
   @Override
   public boolean isExtractionRedstoneConditionMet(@Nonnull EnumFacing dir) {
     RedstoneControlMode mode = getExtractionRedstoneMode(dir);
-    return ConduitUtil.isRedstoneControlModeMet(this, mode, getExtractionSignalColor(dir));
+    return ConduitUtil.isRedstoneControlModeMet(this, mode, getExtractionSignalColor(dir), dir);
   }
 
   @Override
@@ -889,7 +889,7 @@ public class ItemConduit extends AbstractConduit implements IItemConduit, IFilte
       result.add(elem);
     } else {
       ItemStack input = player.getHeldItemMainhand();
-      if (input.getItem() == itemConduitProbe.getItem()) {
+      if (input.getItem() == itemConduitProbe.getItemNN()) {
         input = player.getHeldItemOffhand();
       }
       ItemConduitNetwork icn = getNetwork();

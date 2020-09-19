@@ -5,7 +5,6 @@ import javax.annotation.Nonnull;
 import com.enderio.core.common.vecmath.Vector3f;
 
 import crazypants.enderio.api.IModObject;
-import crazypants.enderio.api.redstone.IRedstoneConnectable;
 import crazypants.enderio.base.BlockEio;
 import crazypants.enderio.base.render.IHaveRenderers;
 import crazypants.enderio.util.ClientUtil;
@@ -28,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockElectricLight extends BlockEio<TileElectricLight> implements IRedstoneConnectable, IHaveRenderers {
+public class BlockElectricLight extends BlockEio<TileElectricLight> implements IHaveRenderers {
 
   static final float BLOCK_HEIGHT = 0.05f;
   static final float BLOCK_WIDTH = 0.3f;
@@ -127,7 +126,7 @@ public class BlockElectricLight extends BlockEio<TileElectricLight> implements I
   @Override
   public @Nonnull IBlockState getActualState(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
     TileElectricLight te = getTileEntitySafe(world, pos);
-    return state.withProperty(FACING, te == null ? EnumFacing.DOWN : te.getFace());
+    return te == null ? state : state.withProperty(FACING, te.getFace());
   }
 
   @Override
@@ -152,11 +151,6 @@ public class BlockElectricLight extends BlockEio<TileElectricLight> implements I
       return block.getLightValue(bs, world, pos);
     }
     return bs.getValue(ACTIVE) ? 15 : 0;
-  }
-
-  @Override
-  public boolean shouldRedstoneConduitConnect(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing from) {
-    return true;
   }
 
   @Override
@@ -188,6 +182,7 @@ public class BlockElectricLight extends BlockEio<TileElectricLight> implements I
     if (te != null) {
       te.onBlockRemoved();
     }
+    super.breakBlock(worldIn, pos, state);
   }
 
   @Override

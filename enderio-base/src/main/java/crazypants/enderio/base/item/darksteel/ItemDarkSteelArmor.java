@@ -56,10 +56,12 @@ import crazypants.enderio.base.render.itemoverlay.PowerBarOverlayRenderHelper;
 import crazypants.enderio.util.NbtValue;
 import crazypants.enderio.util.Prep;
 import net.minecraft.block.Block;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -310,8 +312,8 @@ public class ItemDarkSteelArmor extends ItemArmor implements ISpecialArmor, IAdv
 
   @Override
   @SideOnly(Side.CLIENT)
-  public @Nonnull IRenderUpgrade getRender() {
-    return armorType == EntityEquipmentSlot.HEAD ? PaintedHelmetLayer.instance : IHasPlayerRenderer.super.getRender();
+  public @Nonnull IRenderUpgrade getRender(@Nonnull AbstractClientPlayer player) {
+    return armorType == EntityEquipmentSlot.HEAD ? PaintedHelmetLayer.instance : IHasPlayerRenderer.super.getRender(player);
   }
 
   @Override
@@ -506,7 +508,22 @@ public class ItemDarkSteelArmor extends ItemArmor implements ISpecialArmor, IAdv
       }
       return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
-    return super.onItemRightClick(worldIn, playerIn, handIn);
+
+    // copy from super:
+
+    ItemStack itemstack = playerIn.getHeldItem(handIn);
+    EntityEquipmentSlot entityequipmentslot = EntityLiving.getSlotForItemStack(itemstack);
+    ItemStack itemstack1 = playerIn.getItemStackFromSlot(entityequipmentslot);
+
+    if (itemstack1.isEmpty()) {
+      playerIn.setItemStackToSlot(entityequipmentslot, itemstack.copy());
+      // vanilla: itemstack.setCount(0);
+      // version that doesn't change the stack that Forge looks at to determine if the item was destroyed:
+      playerIn.setHeldItem(handIn, Prep.getEmpty());
+      return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+    } else {
+      return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
+    }
   }
 
 }

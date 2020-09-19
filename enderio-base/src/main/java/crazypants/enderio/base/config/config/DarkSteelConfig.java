@@ -221,6 +221,11 @@ public final class DarkSteelConfig {
       F_INVENTORY.make("rows2", 4, "Number of inventory columns the inventory II upgrade gives.").setRange(1, 6).sync(),
       F_INVENTORY.make("rows3", 6, "Number of inventory columns the inventory III upgrade gives.").setRange(1, 6).sync());
 
+  public static final IValue<Integer> slotLimitBytes = F_INVENTORY.make("slotLimitBytes", 1337, //
+      "Maximum size (when serialized into a binary buffer) an itemstack can have to be allowed into a slot of the 'Inventory' upgrade. "
+          + "Note that having a player inventory that's over an uncertain size will crash the game and make a world unplayable.")
+      .setRange(500, 5000).sync();
+
   public static final IValueFactoryEIO F_EXPLOSIVE = F_UPGRADES.section(".explosive");
 
   public static final NNList<IValue<Integer>> explosiveUpgradeCost = new NNList<>( //
@@ -286,7 +291,9 @@ public final class DarkSteelConfig {
 
   public static final IValue<Integer> swimCost = F_SWIM.make("upgradeCost", 4, "Number of levels required for the 'Swim' upgrade.").setRange(1, 99).sync();
   public static final IValue<Double> swimSpeed = F_SWIM.make("speed", 2.5, //
-      "Speed modifier applied when swimming with the Dark Steel Boots with Flippers.").setRange(0.1, 1).sync();
+      "Speed modifier applied when swimming with the Dark Steel Boots with Flippers.").setRange(0.1, 10).sync();
+  public static final IValue<Double> swimSpeedDepthStrider = F_SWIM.make("speedDepthStrider", 2.5 / 50, //
+      "Speed modifier applied when swimming with the Dark Steel Boots with Flippers enchanted with Depth Strider.").setRange(0.1 / 50, 10).sync();
 
   public static final IValueFactory F_NIGHT_VISION = F_UPGRADES.section(".nightVision");
 

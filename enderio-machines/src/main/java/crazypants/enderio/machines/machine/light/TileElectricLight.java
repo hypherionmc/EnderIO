@@ -24,6 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import static crazypants.enderio.base.capacitor.CapacitorKey.LEGACY_ENERGY_INTAKE;
@@ -42,8 +43,6 @@ public class TileElectricLight extends TileEntityEio implements ILegacyPoweredTi
   private List<BlockPos> lightNodes;
 
   private boolean updatingLightNodes = false;
-
-  private boolean lastActive = false;
 
   private WirelessChargedLocation chargedLocation;
 
@@ -105,59 +104,60 @@ public class TileElectricLight extends TileEntityEio implements ILegacyPoweredTi
       return;
     }
 
-    boolean isActivated = init ? world.isBlockPowered(pos) ^ isInverted() : lastActive;
-    if (requiresPower()) {
-      if (isActivated) {
-        if (!hasPower()) {
-          isActivated = false;
-        } else {
-          setEnergyStored(getEnergyStored() - RF_USE_PER_TICK);
-        }
-      }
+    final boolean isActive = world.getBlockState(pos).getValue(BlockElectricLight.ACTIVE);
+    boolean shouldActive = (world.isBlockPowered(pos) ^ isInverted()) && (!requiresPower() || hasPower());
 
+    if (requiresPower()) {
       if (init) {
         updateLightNodes();
       }
-    }
-
-    if (isActivated != lastActive || init) {
-
-      IBlockState bs = world.getBlockState(pos);
-      bs = bs.withProperty(BlockElectricLight.ACTIVE, isActivated);
-      world.setBlockState(pos, bs, 2);
-
-      if (requiresPower()) {
-        for (BlockPos ln : lightNodes) {
-          if (ln != null) {
-            bs = world.getBlockState(ln);
-            if (bs.getBlock() == block_light_node.getBlock()) {
-              bs = bs.withProperty(BlockLightNode.ACTIVE, isActivated);
-              world.setBlockState(ln, bs, 2);
-              world.notifyBlockUpdate(ln, bs, bs, 3);
-              world.checkLightFor(EnumSkyBlock.BLOCK, ln);
-            }
-          }
-        }
+      if (isWireless()) {
+        executeWirelessCharging();
       }
-      world.notifyBlockUpdate(pos, bs, bs, 3);
-      world.checkLightFor(EnumSkyBlock.BLOCK, pos);
-      init = false;
-      lastActive = isActivated;
+      if (shouldActive) {
+        setEnergyStored(getEnergyStored() - RF_USE_PER_TICK);
+      }
 
     }
 
-    if (isWireless()) {
+    if (init || (isActive != shouldActive)) {
+      setBlockstateAndNodes(shouldActive);
+    }
+
+    init = false;
+  }
+
+  public boolean providesPoweredLight() {
+    return (world.isBlockPowered(pos) ^ isInverted()) && (requiresPower() && hasPower());
+  }
+
+  private void executeWirelessCharging() {
+    if (energyStoredRF < getMaxEnergyStored()) {
       if (chargedLocation == null) {
         chargedLocation = new WirelessChargedLocation(this);
       }
-      if (energyStoredRF < getMaxEnergyStored()) {
-        boolean needInit = energyStoredRF == 0;
-        energyStoredRF += chargedLocation.takeEnergy(Math.min(getMaxEnergyStored() - energyStoredRF, 10));
-        if (needInit && energyStoredRF > 0) {
-          init = true;
+      energyStoredRF += chargedLocation.takeEnergy(Math.min(getMaxEnergyStored() - energyStoredRF, 10));
+    }
+  }
+
+  private void setBlockstateAndNodes(boolean isActivated) {
+    IBlockState bs = world.getBlockState(pos);
+    IBlockState bsnew = bs.withProperty(BlockElectricLight.ACTIVE, isActivated);
+    world.setBlockState(pos, bsnew, 2);
+
+    if (requiresPower()) {
+      for (BlockPos ln : lightNodes) {
+        if (ln != null) {
+          TileEntity te = world.getTileEntity(ln);
+          if ((te instanceof TileLightNode)) {
+            ((TileLightNode) te).calculateLight();
+          }
         }
       }
     }
+
+    world.notifyBlockUpdate(pos, bs, bsnew, Constants.BlockFlags.DEFAULT);
+    world.checkLightFor(EnumSkyBlock.BLOCK, pos);
   }
 
   public void onBlockRemoved() {
@@ -186,6 +186,10 @@ public class TileElectricLight extends TileEntityEio implements ILegacyPoweredTi
       if (lightNodes == null) { // just created
         lightNodes = new ArrayList<BlockPos>();
       }
+
+      // TODO: This a a mess much too big for just a handful of lightnode.
+      // (1) Clean this up
+      // (2) Extend the range of lightnodes to something more useful
 
       for (EnumFacing dir : EnumFacing.VALUES) {
         if (dir != face && dir != face.getOpposite()) { // skip the way we are facing
@@ -221,7 +225,7 @@ public class TileElectricLight extends TileEntityEio implements ILegacyPoweredTi
             world.setBlockState(entry, block_light_node.getBlockNN().getDefaultState(), 3);
             TileEntity te = world.getTileEntity(entry);
             if (te instanceof TileLightNode) {
-              ((TileLightNode) te).setParentPos(getPos());
+              ((TileLightNode) te).addParent(getPos());
               lightNodes.add(entry);
             }
           } else {
@@ -231,8 +235,8 @@ public class TileElectricLight extends TileEntityEio implements ILegacyPoweredTi
         for (BlockPos entry : before) {
           if (!after.contains(entry) && entry != null) {
             TileEntity te = world.getTileEntity(entry);
-            if ((te instanceof TileLightNode) && (((TileLightNode) te).getParentPos().equals(getPos()))) {
-              world.setBlockToAir(entry);
+            if ((te instanceof TileLightNode)) {
+              ((TileLightNode) te).removeParent(getPos());
             }
           }
         }
@@ -281,16 +285,14 @@ public class TileElectricLight extends TileEntityEio implements ILegacyPoweredTi
     }
   }
 
-  private boolean isLightNode(Vector3d offset) {
-    BlockPos bp = new BlockPos(getPos().getX() + (int) offset.x, getPos().getY() + (int) offset.y, getPos().getZ() + (int) offset.z);
-    return world.getBlockState(bp).getBlock() == block_light_node.getBlock() && world.getTileEntity(bp) instanceof TileLightNode;
-  }
-
   private void clearLightNodes() {
     if (lightNodes != null) {
       for (BlockPos ln : lightNodes) {
-        if (ln != null && world.getBlockState(ln).getBlock() == block_light_node.getBlock()) {
-          world.setBlockToAir(ln);
+        if (ln != null) {
+          TileEntity te = world.getTileEntity(ln);
+          if ((te instanceof TileLightNode)) {
+            ((TileLightNode) te).removeParent(getPos());
+          }
         }
       }
       lightNodes.clear();
@@ -302,13 +304,6 @@ public class TileElectricLight extends TileEntityEio implements ILegacyPoweredTi
     int y = getPos().getY() + (int) offset.y;
     int z = getPos().getZ() + (int) offset.z;
 
-    if (isLightNode(offset)) {
-      TileLightNode te = (TileLightNode) world.getTileEntity(new BlockPos(x, y, z));
-      if (te != null && !getPos().equals(te.getParentPos())) {
-        // its somebody else's so leave it alone
-        return;
-      }
-    }
     result.add(new BlockPos(x, y, z));
   }
 
@@ -317,8 +312,7 @@ public class TileElectricLight extends TileEntityEio implements ILegacyPoweredTi
   }
 
   private boolean isAir(Vector3d offset) {
-    return world.isAirBlock(new BlockPos(getPos().getX() + (int) offset.x, getPos().getY() + (int) offset.y, getPos().getZ() + (int) offset.z))
-        || isLightNode(offset);
+    return world.isAirBlock(new BlockPos(getPos().getX() + (int) offset.x, getPos().getY() + (int) offset.y, getPos().getZ() + (int) offset.z));
   }
 
   public boolean hasPower() {

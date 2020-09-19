@@ -23,6 +23,7 @@ import crazypants.enderio.base.config.config.PersonalConfig;
 import crazypants.enderio.base.config.config.TeleportConfig;
 import crazypants.enderio.base.config.recipes.RecipeFactory;
 import crazypants.enderio.base.config.recipes.RecipeLoader;
+import crazypants.enderio.base.diagnostics.EnderIOCrashCallable;
 import crazypants.enderio.base.diagnostics.ProfilerAntiReactor;
 import crazypants.enderio.base.diagnostics.ProfilerDebugger;
 import crazypants.enderio.base.events.EnderIOLifecycleEvent;
@@ -54,6 +55,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -117,6 +119,7 @@ public class EnderIO implements IEnderIOAddon {
 
   public EnderIO() {
     SimpleMixinLoader.loadMixinSources(this);
+    startupChecks();
   }
 
   @EventHandler
@@ -311,7 +314,7 @@ public class EnderIO implements IEnderIOAddon {
   public NNList<Triple<Integer, RecipeFactory, String>> getRecipeFiles() {
     return new NNList<>(Triple.of(0, null, "aliases"), Triple.of(1, null, "materials"), Triple.of(1, null, "items"), Triple.of(1, null, "base"),
         Triple.of(1, null, "balls"), Triple.of(9, null, "misc"), Triple.of(9, null, "capacitor"), Triple.of(1, null, "hiding_base"),
-        Triple.of(1, null, "darksteel_upgrades"), Triple.of(1, null, "fuels"));
+        Triple.of(1, null, "darksteel_upgrades"), Triple.of(1, null, "fuels"), Triple.of(1, null, "glass"), Triple.of(1, null, "generated"));
   }
 
   @Override
@@ -332,9 +335,16 @@ public class EnderIO implements IEnderIOAddon {
       }
     });
     CrashReportCategory.addBlockInfo(crashreportcategory, new BlockPos(0, 0, 0), ModObject.block_machine_base.getBlockNN().getDefaultState());
+    // the one failing usually is in net.minecraft.world.World.neighborChanged(BlockPos, Block, BlockPos). That one's $2.
+    try {
+      net.minecraft.world.World.class.getClassLoader().loadClass("net/minecraft/world/World$2");
+    } catch (ClassNotFoundException e) {
+      // This is unexpected but not our problem.
+    }
   }
 
-  static {
+  private static void startupChecks() {
+    FMLCommonHandler.instance().registerCrashCallable(new EnderIOCrashCallable());
     if (com.mojang.authlib.minecraft.MinecraftProfileTexture.Type.ELYTRA.getClass().toString().equals("force a classload real hard")) {
       // this will crash some pirated clients.
       // better now than some weird and seemingly random crashes later in the game.

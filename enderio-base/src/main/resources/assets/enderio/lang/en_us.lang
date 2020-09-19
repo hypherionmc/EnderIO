@@ -52,7 +52,7 @@ item.item_basic_capacitor.activated.name=Double-Layer Capacitor
 item.item_basic_capacitor.basic.name=Basic Capacitor
 item.item_basic_capacitor.ender.name=Octadic Capacitor
 enderio.activated.name=Double-Layer Capacitor
-enderio.ender.name=Ocatadic Capacitor
+enderio.ender.name=Octadic Capacitor
 
 item.item_broken_spawner.name=Broken Spawner
 item.item_broken_spawner.tooltip.detailed.line1=Combine with a Powered Spawner
@@ -80,12 +80,7 @@ item.item_conduit_facade.transparent.hardened.tooltip.detailed.line1=Transparent
 item.item_conduit_facade.transparent.hardened.tooltip.detailed.line2=Hardened: Resists breaking and explosions
 
 item.item_conduit_probe.name=Conduit Probe
-item.item_conduit_probe.tooltip.detailed.line1=In probe mode R-Click on a conduit
-item.item_conduit_probe.tooltip.detailed.line2=to display details about its network
-item.item_conduit_probe.tooltip.detailed.line3=In copy/paste mode Shift-R-Click to
-item.item_conduit_probe.tooltip.detailed.line4=copy a conduit bundles connection settings 
-item.item_conduit_probe.tooltip.detailed.line5=R-Click to paste them
-item.item_conduit_probe.tooltip.detailed.line6=Use Shift-Mouse Wheel or 'Y' to change mode
+item.item_conduit_probe.tooltip.detailed=In probe mode R-Click on a conduit to display details about its network|In copy/paste mode Shift-R-Click to copy a conduit bundle's connection settings|R-Click to paste them|Use Shift-Mouse Wheel or 'Y' to change mode
 
 item.item_coord_selector.name=Coordinate Selector
 item.item_coord_selector.tooltip.detailed.line1=Prints coordinates of a block.
@@ -312,6 +307,9 @@ item.item_material.infinity_goop.tooltip.detailed.line1=An infinitely sticky sub
 item.item_material.infinity_goop.tooltip.detailed.line2=Randalf got some on him once, and was stuck to his staff of travelling for 6 months...
 item.item_material.clayed_glowstone.name=Clay-Coated Glowstone Dust
 item.item_material.black_paper.name=Black Paper
+item.item_material.token_animal.name=Animal Token
+item.item_material.token_monster.name=Monster Token
+item.item_material.token_player.name=Player Token
 
 item.item_alloy_endergy_ingot_crude_steel.name=Crude Steel Ingot
 item.item_alloy_endergy_ingot_crystalline_alloy.name=Crystalline Alloy Ingot
@@ -429,10 +427,6 @@ tile.block_alloy_endergy.vivid_alloy.name=Vivid Alloy Block
 
 tile.block_cold_fire.name=Cold Fire
 
-tile.block_dark_fused_glass.name=Dark Clear Glass
-
-tile.block_dark_fused_quartz.name=Dark Fused Quartz
-
 tile.block_dark_iron_bars.name=Dark Iron Bars
 
 tile.block_end_iron_bars.name=End Steel Bars
@@ -526,15 +520,60 @@ tile.block_enderman_skull.tormented.name=Tormented Enderman Head
 tile.block_enderman_skull.reanimated.name=Reanimated Enderman Head
 tile.block_enderman_skull.reanimated_tormented.name=Reanimated Tormented Enderman Head
 
-tile.block_enlightened_fused_glass.name=Enlightened Clear Glass
-
-tile.block_enlightened_fused_quartz.name=Enlightened Fused Quartz
-
 tile.block_exit_rail.name=Exit Rail
 
-tile.block_fused_glass.name=Quite Clear Glass
-
 tile.block_fused_quartz.name=Fused Quartz
+tile.block_fused_glass.name=Quite Clear Glass
+tile.block_enlightened_fused_quartz.name=Enlightened Fused Quartz
+tile.block_enlightened_fused_glass.name=Enlightened Clear Glass
+tile.block_dark_fused_quartz.name=Dark Fused Quartz
+tile.block_dark_fused_glass.name=Dark Clear Glass
+
+tile.block_holy_fused_quartz.name=Fused Quartz
+tile.block_holy_fused_glass.name=Quite Clear Glass
+tile.block_holy_enlightened_fused_quartz.name=Enlightened Fused Quartz
+tile.block_holy_enlightened_fused_glass.name=Enlightened Clear Glass
+tile.block_holy_dark_fused_quartz.name=Dark Fused Quartz
+tile.block_holy_dark_fused_glass.name=Dark Clear Glass
+
+tile.block_unholy_fused_quartz.name=Fused Quartz
+tile.block_unholy_fused_glass.name=Quite Clear Glass
+tile.block_unholy_enlightened_fused_quartz.name=Enlightened Fused Quartz
+tile.block_unholy_enlightened_fused_glass.name=Enlightened Clear Glass
+tile.block_unholy_dark_fused_quartz.name=Dark Fused Quartz
+tile.block_unholy_dark_fused_glass.name=Dark Clear Glass
+
+tile.block_pasture_fused_quartz.name=Fused Quartz
+tile.block_pasture_fused_glass.name=Quite Clear Glass
+tile.block_pasture_enlightened_fused_quartz.name=Enlightened Fused Quartz
+tile.block_pasture_enlightened_fused_glass.name=Enlightened Clear Glass
+tile.block_pasture_dark_fused_quartz.name=Dark Fused Quartz
+tile.block_pasture_dark_fused_glass.name=Dark Clear Glass
+
+tile.block_not_holy_fused_quartz.name=Fused Quartz
+tile.block_not_holy_fused_glass.name=Quite Clear Glass
+tile.block_not_holy_enlightened_fused_quartz.name=Enlightened Fused Quartz
+tile.block_not_holy_enlightened_fused_glass.name=Enlightened Clear Glass
+tile.block_not_holy_dark_fused_quartz.name=Dark Fused Quartz
+tile.block_not_holy_dark_fused_glass.name=Dark Clear Glass
+
+tile.block_not_unholy_fused_quartz.name=Fused Quartz
+tile.block_not_unholy_fused_glass.name=Quite Clear Glass
+tile.block_not_unholy_enlightened_fused_quartz.name=Enlightened Fused Quartz
+tile.block_not_unholy_enlightened_fused_glass.name=Enlightened Clear Glass
+tile.block_not_unholy_dark_fused_quartz.name=Dark Fused Quartz
+tile.block_not_unholy_dark_fused_glass.name=Dark Clear Glass
+
+tile.block_not_pasture_fused_quartz.name=Fused Quartz
+tile.block_not_pasture_fused_glass.name=Quite Clear Glass
+tile.block_not_pasture_enlightened_fused_quartz.name=Enlightened Fused Quartz
+tile.block_not_pasture_enlightened_fused_glass.name=Enlightened Clear Glass
+tile.block_not_pasture_dark_fused_quartz.name=Dark Fused Quartz
+tile.block_not_pasture_dark_fused_glass.name=Dark Clear Glass
+
+tile.block_painted_fused_quartz.name=Painted Fused Quartz
+tile.block_painted_fused_quartz1.name=Painted Fused Quartz
+tile.block_painted_fused_quartz2.name=Painted Fused Quartz
 
 tile.block_machine_base.name=(technical block)
 tile.block_machine_io.name=(technical block)
@@ -544,7 +583,6 @@ tile.block_painted_dark_steel_trapdoor.name=Painted Dark Steel Trapdoor
 tile.block_painted_double_slab.name=Painted Slab
 tile.block_painted_fence.name=Painted Fence
 tile.block_painted_fence_gate.name=Painted Gate
-tile.block_painted_fused_quartz.name=Painted Fused Quartz
 tile.block_painted_glowstone.name=Painted Glowstone
 tile.block_painted_glowstone_solid.name=Painted Glowstone
 tile.block_painted_iron_trapdoor.name=Painted Iron Trapdoor
@@ -603,6 +641,7 @@ tile.block_painted_packed_ice_solid.name=Painted Packed Ice
 tile.block_painted_slab.name=Painted Slab
 tile.block_painted_stair.name=Painted Stairs
 tile.block_painted_stone.name=Painted Cobblestone
+tile.block_painted_sand.name=Painted Sand
 tile.block_painted_stone_double_slab.name=Painted Stone Slab
 tile.block_painted_stone_fence.name=Painted Stone Fence
 tile.block_painted_stone_slab.name=Painted Stone Slab
@@ -645,6 +684,13 @@ enderio.machine.tooltip.upgrade.tooltip.detailed.line1=Increases energy storage 
 enderio.block.tooltip.blastResistant=Blast Resistant
 enderio.block.tooltip.lightEmitter=Emits Light
 enderio.block.tooltip.lightBlocker=Blocks Light
+
+enderio.block.tooltip.allowPlayers=Not solid for players
+enderio.block.tooltip.allowMonsters=Not solid for monsters
+enderio.block.tooltip.allowAnimals=Not solid for animals
+enderio.block.tooltip.disallowPlayers=Solid only for players
+enderio.block.tooltip.disallowMonsters=Solid only for monsters
+enderio.block.tooltip.disallowAnimals=Solid only for animals
 
 
 enderio.grindingball.tooltip.line1=%sSAG Mill Grinding Ball
@@ -834,8 +880,8 @@ enderio.darksteel.upgrade.spoon.tooltip.detailed.line1=Who needs a shovel when y
 enderio.darksteel.upgrade.hoe.name=Fork
 enderio.darksteel.upgrade.hoe.tooltip.detailed.line1=Who needs a hoe when you have a fork...
 
-enderio.darksteel.upgrade.tnt.enabled=Explosive Active
-enderio.darksteel.upgrade.tnt.disabled=Explosive Disabled
+enderio.darksteel.upgrade.tnt.0.enabled=Explosive Active
+enderio.darksteel.upgrade.tnt.0.disabled=Explosive Disabled
 
 enderio.darksteel.upgrade.tnt.0.name=Explosive I
 enderio.darksteel.upgrade.tnt.0.tooltip.detailed.line1=Adds explosive power to the pickaxe, damaging surrounding blocks while mining.
@@ -874,9 +920,6 @@ enderio.darksteel.upgrade.anvil.1.tooltip.detailed.line2=Activate with a hotkey 
 enderio.darksteel.upgrade.anvil.2.name=Pocket Anvil
 enderio.darksteel.upgrade.anvil.2.tooltip.detailed.line1=Provides full anvil functionality and allows editing upgrades of any item in the field.
 enderio.darksteel.upgrade.anvil.2.tooltip.detailed.line2=Activate with a hotkey or by shift-right-clicking any upgradeable item that doesn't do anything else when doing that.
-
-enderio.darksteel.upgrade.step_assist.name=Step Assist
-enderio.darksteel.upgrade.step_assist.tooltip.detailed.line1=Allows you to walk up blocks as if they were stairs.
 
 item.item_dark_steel_upgrade.name=Blank Dark Steel Upgrade
 item.item_dark_steel_upgrade.with=Dark Steel Upgrade "%s"
@@ -971,13 +1014,15 @@ enderio.darksteel.upgrade.thaumaturge_robes.legs.tooltip.detailed.line1=Vis Disc
 enderio.darksteel.upgrade.thaumaturge_robes.feet.name=Thaumaturge's Boots
 enderio.darksteel.upgrade.thaumaturge_robes.feet.tooltip.detailed.line1=Vis Discount: 2%
 
-enderio.darksteel.upgrade.jump.enabled=Jump Enabled
-enderio.darksteel.upgrade.jump.disabled=Jump Disabled
-
 enderio.darksteel.upgrade.jump_one.name=Jump
 enderio.darksteel.upgrade.jump_one.tooltip.detailed.line1=Increases step and jump height
-enderio.darksteel.upgrade.stepAssist.enabled=Step Assist Active
-enderio.darksteel.upgrade.stepAssist.disabled=Step Assist Disabled
+enderio.darksteel.upgrade.jump_one.enabled=Jump Enabled
+enderio.darksteel.upgrade.jump_one.disabled=Jump Disabled
+
+enderio.darksteel.upgrade.step_assist.name=Step Assist
+enderio.darksteel.upgrade.step_assist.tooltip.detailed.line1=Allows you to walk up blocks as if they were stairs.
+enderio.darksteel.upgrade.step_assist.enabled=Step Assist Active
+enderio.darksteel.upgrade.step_assist.disabled=Step Assist Disabled
 
 enderio.gui.step_assis_unavailable=Step Assist may be disabled by another mod
 
@@ -991,8 +1036,8 @@ enderio.darksteel.upgrade.jump_three.tooltip.detailed.line2=Allows triple jumps
 
 enderio.darksteel.upgrade.speed_one.name=Speed
 enderio.darksteel.upgrade.speed_one.tooltip.detailed.line1=Increases movement speed
-enderio.darksteel.upgrade.speed.enabled=Speed Active
-enderio.darksteel.upgrade.speed.disabled=Speed Disabled
+enderio.darksteel.upgrade.speed_one.enabled=Speed Active
+enderio.darksteel.upgrade.speed_one.disabled=Speed Disabled
 
 enderio.darksteel.upgrade.speed_two.name=Speed II
 enderio.darksteel.upgrade.speed_two.tooltip.detailed.line1=Increases movement speed
@@ -1007,6 +1052,8 @@ enderio.darksteel.upgrade.nightVision.enabled=Night Vision Enabled
 enderio.darksteel.upgrade.nightVision.disabled=Night Vision Disabled
 
 enderio.darksteel.upgrade.top.name=The One Probe
+enderio.darksteel.upgrade.top.enabled=The One Probe Enabled
+enderio.darksteel.upgrade.top.disabled=The One Probe Disabled
 
 # These are used for the "The One Probe" integration
 enderio.top.action.header.pre=§e
@@ -1192,6 +1239,7 @@ enderio.generic.tooltip.paintedWith=Painted with: %s
 enderio.generic.tooltip.unpainted=Not painted
 
 enderio.wrench.permission.denied=Permission §cdenied§r!
+enderio.wrench.permission.denied.blockbreak=Block breaking §cdenied§r!
 enderio.soulvial.denied=Permission §cdenied§r!
 enderio.soulvial.owned.denied=Permission §cdenied§r - only owners may pick up owned animals
 enderio.soulvial.player.denied=§cNo!$r How would you feel if you had to play this game from inside a bottle?
@@ -1240,7 +1288,7 @@ enderio.loot.capacitor.entry.6=This "%s" is the property of Randalf the Ex-Tinke
 enderio.loot.capacitor.entry.7=Your "%s" can now be upgraded free of charge to "Capacitor 1". Press ok or abort to do so.
 enderio.loot.capacitor.entry.8=Put this "%s" into different machines to find out what it does. Or ask aunt Google.
 
-enderio.loot.capacitor.title.count=23
+enderio.loot.capacitor.title.count=24
 enderio.loot.capacitor.title.0=Remarkable Capacitor
 enderio.loot.capacitor.title.1=Unremarkable Capacitor
 enderio.loot.capacitor.title.2=Found Capacitor
@@ -1264,11 +1312,12 @@ enderio.loot.capacitor.title.19=Thing
 enderio.loot.capacitor.title.20=Something
 enderio.loot.capacitor.title.21=Nothing
 enderio.loot.capacitor.title.22=Help! I'm trapped in a video game!
+enderio.loot.capacitor.title.23=Help! I'm trapped in a video game factory!
 
 enderio.keybind.inventory=Open Armor Inventory
 enderio.keybind.inventory.none_equipped=No armor with inventory equipped
 enderio.keybind.dsu=Open Dark Steel Upgrade Inventory
-enderio.keybind.glidertoggle=Glider/Elytra Toggle
+enderio.keybind.glidertoggle=Glider/Elytra
 enderio.keybind.soundlocator=Sound Locator
 enderio.keybind.nightvision=Night Vision
 enderio.keybind.gogglesofrevealing=Goggles of Revealing
@@ -1276,16 +1325,23 @@ enderio.keybind.stepassist=Step Assist
 enderio.keybind.speed=Speed
 enderio.keybind.jump=Jump
 enderio.keybind.tnt=Explosive
-enderio.keybind.top=Toggle The One Probe (Helmet Upgrade)
+enderio.keybind.top=The One Probe (Helmet Upgrade)
 enderio.keybind.yetawrenchmode=Yeta Wrench Mode
 enderio.keybind.magnet=Toggle Electromagnet
-enderio.keybind.fovplus=Camera: Zoom out
-enderio.keybind.fovminus=Camera: Zoom in
-enderio.keybind.fovplusfast=Camera: Zoom out fast
-enderio.keybind.fovminusfast=Camera: Zoom in fast
-enderio.keybind.fovreset=Camera: Reset Zoom
+enderio.keybind.fovplus=Zoom out
+enderio.keybind.fovminus=Zoom in
+enderio.keybind.fovplusfast=Zoom out fast
+enderio.keybind.fovminusfast=Zoom in fast
+enderio.keybind.fovreset=Reset Zoom
+enderio.keybind.fovunreset=Revert Zoom (undo reset)
+enderio.keybind.fovstore=Store Zoom Level
+enderio.keybind.fovrecall=Recall Zoom Level
+
+enderio.keybind.zoom.stored: Zoom level stored
+
 key.category.darksteelarmor=Dark Steel Armor 
 key.category.tools=Tools
+key.category.camera=Camera Controls
 
 enderio.gui.probe.copied=Copied conduit settings
 enderio.gui.probe.pasted=Pasted conduit settings
@@ -1445,7 +1501,7 @@ entity.enderio.enderio.owl_egg.name=Owl Egg
 entity.enderio.primed_charge.name=Primed Charge
 entity.enderio.enderio.primed_charge.name=Primed Charge
 
-enderio.tooltip.inventory_charger.need_upgrade=§4No energy crystal installed!
+enderio.tooltip.inventory_charger.need_upgrade=§4No Empowered Upgrade installed!
 enderio.tooltip.inventory_charger.enabled=Inventory Charger enabled
 enderio.tooltip.inventory_charger.disabled=Inventory Charger disabled
 

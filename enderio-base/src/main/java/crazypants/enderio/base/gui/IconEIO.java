@@ -25,6 +25,7 @@ public enum IconEIO implements IWidgetIcon {
   LOCK_LOCKED(48, 192),
   CROSS(64, 192),
   PLUS(80, 192),
+  QUESTION(16, 208),
   ARROWS(176, 192),
   ADD(112, 240),
   SUBTRACT(96, 240),
@@ -179,6 +180,13 @@ public enum IconEIO implements IWidgetIcon {
 
   RECIPE_BOOK(48, 144),
   INFO(64, 144),
+
+  GLASS_LIGHT(80, 144),
+  GLASS_DARK(96, 144),
+  GLASS_PLAYER(112, 144),
+  GLASS_MONSTER(128, 144),
+  GLASS_ANIMAL(144, 144),
+  GLASS_NOT(160, 144),
 
   ;
 

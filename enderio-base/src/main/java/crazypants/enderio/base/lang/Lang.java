@@ -43,6 +43,14 @@ public enum Lang implements ILang {
   BLOCK_BLAST_RESISTANT(".block.tooltip.blastResistant"),
   BLOCK_LIGHT_EMITTER(".block.tooltip.lightEmitter"),
   BLOCK_LIGHT_BLOCKER(".block.tooltip.lightBlocker"),
+
+  BLOCK_ALLOW_PLAYERS(".block.tooltip.allowPlayers"),
+  BLOCK_ALLOW_MONSTERS(".block.tooltip.allowMonsters"),
+  BLOCK_ALLOW_ANIMALS(".block.tooltip.allowAnimals"),
+  BLOCK_DISALLOW_PLAYERS(".block.tooltip.disallowPlayers"),
+  BLOCK_DISALLOW_MONSTERS(".block.tooltip.disallowMonsters"),
+  BLOCK_DISALLOW_ANIMALS(".block.tooltip.disallowAnimals"),
+
   MACHINE_UPGRADE(".machine.tooltip.upgrade"),
   FLUID_TICKPER(".fluid.millibucket.format.tickper"),
   FLUID_AMOUNT(".fluid.millibucket.format"),
@@ -83,6 +91,7 @@ public enum Lang implements ILang {
   PAINTED_WITH(".generic.tooltip.paintedWith"),
   PAINTED_NOT(".generic.tooltip.unpainted"),
   WRENCH_DENIED(".wrench.permission.denied"),
+  WRENCH_DENIED_BLOCKBREAK(".wrench.permission.denied.blockbreak"),
   EASTER_PIGGY(".easteregg.piginabottle"),
   SOUL_VIAL_DENIED(".soulvial.denied"),
   SOUL_VIAL_DENIED_OWNED_PET(".soulvial.owned.denied"),
@@ -211,6 +220,8 @@ public enum Lang implements ILang {
   GUI_DSU_NOT_INSTALLED(".darksteel.upgrades.gui.not_installed"),
   GUI_DSU_NOT_INSERTED(".darksteel.upgrades.gui.not_inserted"),
   GUI_DSU_STORAGE(".darksteel.upgrades.gui.storage"),
+
+  GUI_ZOOM_STORED(".keybind.zoom.stored"),
 
   ;
 
