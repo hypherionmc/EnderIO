@@ -163,6 +163,7 @@ public enum Lang implements ILang {
 
   GUI_REDSTONE_FILTER_SIGNAL_COLOR(".gui.redstone_filter.signal_color"),
   GUI_REDSTONE_FILTER_INPUT_SIGNAL(".gui.redstone_filter.input_signal"),
+  GUI_REDSTONE_FILTER_INPUT_SUBTRACT_SIGNAL(".gui.redstone_filter.subtract_signal"),
   GUI_INFINTY_RECIPE_DIMENSIONS(".gui.infinity_recipe_dimensions"),
   GUI_INFINTY_RECIPE_DIMENSIONS_MULTI(".gui.infinity_recipe_dimensions.multi"),
   GUI_INFINTY_RECIPE_DIMENSIONS_THESE(".gui.infinity_recipe_dimensions.these"),
@@ -171,6 +172,7 @@ public enum Lang implements ILang {
   GUI_INFINTY_RECIPE_DIMENSIONS_NOTHERE(".gui.infinity_recipe_dimensions.nothere"),
   GUI_REDSTONE_FILTER_COUNT(".gui.redstone_filter.count"),
   GUI_REDSTONE_FILTER_TIME(".gui.redstone_filter.time"),
+  GUI_REDSTONE_FILTER_SUBTRACT(".gui.redstone_filter.subtract"),
 
   OWL_NO_OWL(".owlegg.no_owl"),
   INVCHARGER_NEEDUPGRADE(".tooltip.inventory_charger.need_upgrade"),

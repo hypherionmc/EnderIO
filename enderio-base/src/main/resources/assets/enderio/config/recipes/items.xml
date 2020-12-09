@@ -992,4 +992,13 @@ XML editor will display that as tooltips when editing this file.
     </crafting>
   </recipe>
 
+  <recipe name="Filter, Redstone Substraction" required="true">
+    <crafting>
+      <shapeless>
+        <item name="minecraft:comparator"/>
+        <item name="REDSTONE_FILTER_BASE" />
+      </shapeless>
+      <output name="enderio:item_redstone_subtract_filter" />
+    </crafting>
+  </recipe>
 </enderio:recipes>

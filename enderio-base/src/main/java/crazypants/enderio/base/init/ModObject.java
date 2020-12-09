@@ -58,12 +58,7 @@ import crazypants.enderio.base.filter.item.items.ItemExistingItemFilter;
 import crazypants.enderio.base.filter.item.items.ItemModItemFilter;
 import crazypants.enderio.base.filter.item.items.ItemPowerItemFilter;
 import crazypants.enderio.base.filter.item.items.ItemSoulFilter;
-import crazypants.enderio.base.filter.redstone.items.ItemBasicOutputSignalFilter;
-import crazypants.enderio.base.filter.redstone.items.ItemComparatorInputSignalFilter;
-import crazypants.enderio.base.filter.redstone.items.ItemCountingOutputSignalFilter;
-import crazypants.enderio.base.filter.redstone.items.ItemInvertingOutputSignalFilter;
-import crazypants.enderio.base.filter.redstone.items.ItemTimerInputSignalFilter;
-import crazypants.enderio.base.filter.redstone.items.ItemToggleOutputSignalFilter;
+import crazypants.enderio.base.filter.redstone.items.*;
 import crazypants.enderio.base.item.coldfire.ItemColdFireIgniter;
 import crazypants.enderio.base.item.conduitprobe.ItemConduitProbe;
 import crazypants.enderio.base.item.coordselector.ItemCoordSelector;
@@ -229,6 +224,7 @@ public enum ModObject implements IModObjectBase {
   itemRedstoneXnorFilter(ItemBasicOutputSignalFilter::createXnor),
   itemRedstoneToggleFilter(ItemToggleOutputSignalFilter::create),
   itemRedstoneCountingFilter(ItemCountingOutputSignalFilter::create),
+  itemRedstoneSubtractFilter(ItemSubtractionOutputFilter::create),
 
   itemRedstoneSensorFilter(ItemComparatorInputSignalFilter::create),
   itemRedstoneTimerFilter(ItemTimerInputSignalFilter::create),

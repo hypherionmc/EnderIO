@@ -1337,7 +1337,7 @@ enderio.keybind.fovunreset=Revert Zoom (undo reset)
 enderio.keybind.fovstore=Store Zoom Level
 enderio.keybind.fovrecall=Recall Zoom Level
 
-enderio.keybind.zoom.stored: Zoom level stored
+enderio.keybind.zoom.stored=Zoom level stored
 
 key.category.darksteelarmor=Dark Steel Armor 
 key.category.tools=Tools
@@ -1442,6 +1442,7 @@ enderio.gui.redstone_filter.xor=Redstone XOR Filter
 enderio.gui.redstone_filter.xnor=Redstone XNOR Filter
 enderio.gui.redstone_filter.counting=Redstone Counting Filter
 enderio.gui.redstone_filter.timer=Redstone Timer Filter
+enderio.gui.redstone_filter.subtract=Redstone Substraction Filter
 
 enderio.gui.mod.item_filter.delete=Delete
 enderio.gui.mod.item_filter.slot=Input Slot
@@ -1451,6 +1452,7 @@ enderio.gui.power.item_filter.percent=Power Percentage
 
 enderio.gui.redstone_filter.signal_color=Redstone Signal Color
 enderio.gui.redstone_filter.input_signal=Input Signal
+enderio.gui.redstone_filter.subtract_signal=Subtract Signal
 enderio.gui.redstone_filter.count=Count
 enderio.gui.redstone_filter.time=Time
 
@@ -1487,6 +1489,7 @@ item.item_redstone_toggle_filter.name=Redstone Toggle Latch Filter
 item.item_redstone_sensor_filter.name=Redstone Sensor Filter
 item.item_redstone_counting_filter.name=Redstone Counting Filter
 item.item_redstone_timer_filter.name=Redstone Timer Filter
+item.item_redstone_subtract_filter.name=Redstone Substraction Filter
 
 tile.block_confusion_charge.name=Confusion Charge
 tile.block_ender_charge.name=Ender Charge
