@@ -1,4 +1,4 @@
-package crazypants.enderio.conduits.conduit.redstone;
+package crazypants.enderio.base.conduit;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -57,9 +57,9 @@ public interface IRedstoneConduit extends IServerConduit, IClientConduit {
 
   void setOutputSignalColor(@Nonnull EnumFacing dir, @Nonnull DyeColor col);
 
-  @Override
   @Nullable
-  RedstoneConduitNetwork getNetwork() throws NullPointerException;
+  @Override
+  IConduitNetwork<?, ?> getNetwork() throws NullPointerException;
 
   // @Optional.Method(modid = "computercraft")
   // @Nonnull

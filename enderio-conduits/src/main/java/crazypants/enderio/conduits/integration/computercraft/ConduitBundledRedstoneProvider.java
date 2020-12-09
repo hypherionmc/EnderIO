@@ -6,7 +6,7 @@
 //
 //import crazypants.enderio.base.conduit.IConduitBundle;
 //import crazypants.enderio.base.conduit.redstone.signals.Signal;
-//import crazypants.enderio.conduits.conduit.redstone.IRedstoneConduit;
+//import crazypants.enderio.base.conduit.IRedstoneConduit;
 //import crazypants.enderio.conduits.conduit.redstone.RedstoneConduitNetwork;
 //import dan200.computercraft.api.redstone.IBundledRedstoneProvider;
 //import net.minecraft.tileentity.TileEntity;

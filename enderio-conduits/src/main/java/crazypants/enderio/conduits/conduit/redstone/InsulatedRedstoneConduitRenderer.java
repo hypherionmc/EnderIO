@@ -4,10 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import crazypants.enderio.base.conduit.IClientConduit;
-import crazypants.enderio.base.conduit.IConduit;
-import crazypants.enderio.base.conduit.IConduitBundle;
-import crazypants.enderio.base.conduit.IConduitTexture;
+import crazypants.enderio.base.conduit.*;
 import crazypants.enderio.base.conduit.geom.CollidableComponent;
 import crazypants.enderio.conduits.render.ConduitInOutRenderer;
 import crazypants.enderio.conduits.render.DefaultConduitRenderer;

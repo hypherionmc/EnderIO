@@ -223,7 +223,7 @@ public class InsulatedRedstoneConduit extends AbstractConduit implements IRedsto
               if (network != null) {
                 network.destroyNetwork();
               }
-              final RedstoneConduitNetwork neighbourNetwork = neighbour.getNetwork();
+              final RedstoneConduitNetwork neighbourNetwork = (RedstoneConduitNetwork) neighbour.getNetwork();
               if (neighbourNetwork != null) {
                 neighbourNetwork.destroyNetwork();
               }

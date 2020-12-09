@@ -13,6 +13,8 @@ import com.enderio.core.common.util.NullHelper;
 
 import crazypants.enderio.base.conduit.ConduitUtil.UnloadedBlockException;
 import crazypants.enderio.base.conduit.IConduitBundle;
+import crazypants.enderio.base.conduit.IRedstoneConduit;
+import crazypants.enderio.base.conduit.IRedstoneConduitNetwork;
 import crazypants.enderio.base.conduit.redstone.signals.BundledSignal;
 import crazypants.enderio.base.conduit.redstone.signals.CombinedSignal;
 import crazypants.enderio.base.conduit.redstone.signals.Signal;
